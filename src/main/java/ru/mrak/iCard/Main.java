@@ -41,7 +41,7 @@ public class Main {
         if(args.length >= 2) result = args[1];
         if(args.length >= 3) source = args[2];
 
-        FProperties properties = new FProperties();
+        FProperties properties = new FProperties(toAbsolutePat(source));
         List<EntryDoc> entryDocs = FilesReplace.replace(toAbsolutePat(source), toAbsolutePat(result), config, properties);
         if(config.isCreateWB())
             WorkBook.writeBook("Уд. лист", toAbsolutePat(result) + "\\УЛ.xls", entryDocs, properties);

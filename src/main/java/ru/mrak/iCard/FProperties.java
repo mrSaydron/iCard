@@ -32,7 +32,7 @@ public class FProperties {
      * Пытается прочитать конфигурацию сначала из папки с приложением, затем из рабочей папки
      * Если считать не удалось, выводит предупреждение в консоль и возвращает объект с значениями по умолчанию
      */
-    public FProperties() {
+    public FProperties(String source) {
         String jarPath = FProperties.class.getProtectionDomain().getCodeSource().getLocation().getPath();
         String globalPath = jarPath.substring(1,jarPath.lastIndexOf("/")) + "/properties.ini";
         Path globalProperties = Paths.get(globalPath);
@@ -47,8 +47,7 @@ public class FProperties {
         } else {
             System.out.println("Нет файла глобальных свойств по пути: " + globalProperties.toAbsolutePath().toString());
         }
-        Path localProperties = Paths.get("");
-        localProperties = Paths.get(localProperties.toAbsolutePath().toString() + "\\properties.ini");
+        Path localProperties = Paths.get(source + "\\properties.ini");
         if(Files.exists(localProperties)) {
             try (InputStreamReader stream = new InputStreamReader(new FileInputStream(localProperties.toAbsolutePath().toString()), "UTF-8")) {
                 properties.load(stream);
