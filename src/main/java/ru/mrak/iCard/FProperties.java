@@ -27,6 +27,15 @@ public class FProperties {
     private String author = "Разработал";
     private String checked = "";
     private String approved = "";
+    private String nameRegexp = "^(ИГУЛ|IGUL)\\.?(\\d{6})\\.?(\\d{3})(-(\\d{2}))?\\s*_?([А-Яа-яA-Za-z]{1,2}[0-9]{0,2})?(_([0-9]{1,2}))?(\\s(.*))?\\.([A-Za-z]{3,5})$";
+    private int organizationCod = 1;
+    private int characteristic = 2;
+    private int registrationNumber = 3;
+    private int species = 5;
+    private int documentCode = 6;
+    private int documentVersion = 8;
+    private int documentName = 10;
+    private int filenameExtension = 11;
 
     /**
      * Пытается прочитать конфигурацию сначала из папки с приложением, затем из рабочей папки
@@ -79,6 +88,65 @@ public class FProperties {
         if(properties.containsKey("approved")) {
             approved = properties.getProperty("approved");
         }
+        if(properties.containsKey("nameRegexp")) {
+            nameRegexp = properties.getProperty("nameRegexp");
+        }
+        if(properties.containsKey("organizationCod")) {
+            try {
+                organizationCod = Integer.parseInt(properties.getProperty("organizationCod"));
+            } catch (NumberFormatException e) {
+                System.out.println("Свойство organizationCod должно быть числом");
+            }
+        }
+        if(properties.containsKey("characteristic")) {
+            try {
+                organizationCod = Integer.parseInt(properties.getProperty("characteristic"));
+            } catch (NumberFormatException e) {
+                System.out.println("Свойство characteristic должно быть числом");
+            }
+        }
+        if(properties.containsKey("registrationNumber")) {
+            try {
+                organizationCod = Integer.parseInt(properties.getProperty("registrationNumber"));
+            } catch (NumberFormatException e) {
+                System.out.println("Свойство registrationNumber должно быть числом");
+            }
+        }
+        if(properties.containsKey("species")) {
+            try {
+                organizationCod = Integer.parseInt(properties.getProperty("species"));
+            } catch (NumberFormatException e) {
+                System.out.println("Свойство species должно быть числом");
+            }
+        }
+        if(properties.containsKey("documentCode")) {
+            try {
+                organizationCod = Integer.parseInt(properties.getProperty("documentCode"));
+            } catch (NumberFormatException e) {
+                System.out.println("Свойство documentCode должно быть числом");
+            }
+        }
+        if(properties.containsKey("documentVersion")) {
+            try {
+                organizationCod = Integer.parseInt(properties.getProperty("documentVersion"));
+            } catch (NumberFormatException e) {
+                System.out.println("Свойство documentVersion должно быть числом");
+            }
+        }
+        if(properties.containsKey("documentName")) {
+            try {
+                organizationCod = Integer.parseInt(properties.getProperty("documentName"));
+            } catch (NumberFormatException e) {
+                System.out.println("Свойство documentName должно быть числом");
+            }
+        }
+        if(properties.containsKey("filenameExtension")) {
+            try {
+                organizationCod = Integer.parseInt(properties.getProperty("filenameExtension"));
+            } catch (NumberFormatException e) {
+                System.out.println("Свойство filenameExtension должно быть числом");
+            }
+        }
     }
 
     public String[] getDocumentCodeCyr() {
@@ -103,5 +171,41 @@ public class FProperties {
 
     public String getApproved() {
         return approved;
+    }
+
+    public String getNameRegexp() {
+        return nameRegexp;
+    }
+
+    public int getOrganizationCod() {
+        return organizationCod;
+    }
+
+    public int getCharacteristic() {
+        return characteristic;
+    }
+
+    public int getRegistrationNumber() {
+        return registrationNumber;
+    }
+
+    public int getSpecies() {
+        return species;
+    }
+
+    public int getDocumentCode() {
+        return documentCode;
+    }
+
+    public int getDocumentVersion() {
+        return documentVersion;
+    }
+
+    public int getDocumentName() {
+        return documentName;
+    }
+
+    public int getFilenameExtension() {
+        return filenameExtension;
     }
 }

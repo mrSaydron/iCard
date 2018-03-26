@@ -37,6 +37,7 @@ public class FilesReplace {
     private String[] documentCodesCyr;
     private String[] documentCodesLat;
     private String[] filenameExtensions;
+    private FProperties properties;
 
     private static String filenameExtensionPattern = ".+\\.(\\w{3,4})";
 
@@ -63,6 +64,7 @@ public class FilesReplace {
         filesReplace.documentCodesCyr = properties.getDocumentCodeCyr();
         filesReplace.documentCodesLat = properties.getDocumentCodeLat();
         filesReplace.filenameExtensions = properties.getFilenameExtensions();
+        filesReplace.properties = properties;
 
         filesReplace.checkSourcePath();
         filesReplace.createResultPath();
@@ -207,10 +209,10 @@ public class FilesReplace {
                         }
                     }
                     //Проверка на соответствие наименованию документов
-                    if (!fileName.matches(NameParser.getEgexp())) return FileVisitResult.CONTINUE;
+                    if (!fileName.matches(properties.getNameRegexp())) return FileVisitResult.CONTINUE;
                     System.out.println("Файл: " + fileName);
 
-                    NameParser document = NameParser.parser(fileName);
+                    NameParser document = NameParser.parser(fileName, properties);
                     EntryDoc entryDoc = new EntryDoc();
 
                     //Определение кода документа
@@ -273,7 +275,11 @@ public class FilesReplace {
                     Path newFile = Paths.get(resultPath + "\\" + entryDoc.getFileName());
                     if(rename) {
                         if(createWB) {
-                            entryDoc.setMd5(copyFileAndComputeMd5(file, newFile));
+                            if(file.equals(newFile)) {
+                                entryDoc.setMd5(computeMd5(file));
+                            } else {
+                                entryDoc.setMd5(copyFileAndComputeMd5(file, newFile));
+                            }
                         }
                         copyFile(file, newFile);
                     } else {

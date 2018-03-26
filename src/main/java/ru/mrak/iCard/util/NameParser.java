@@ -1,5 +1,7 @@
 package ru.mrak.iCard.util;
 
+import ru.mrak.iCard.FProperties;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -25,30 +27,26 @@ public class NameParser {
     private String documentName;
     private String filenameExtension;
 
-    private static String egexp = "^(ИГУЛ|IGUL)\\.?(\\d{6})\\.?(\\d{3})(-(\\d{2}))?\\s*_?([А-Яа-яA-Za-z]{1,2}[0-9]{0,2})?(_([0-9]{1,2}))?\\s+?(.*)\\.([A-Za-z]{3})$";
+    private static String egexp = "^(ИГУЛ|IGUL)\\.?(\\d{6})\\.?(\\d{3})(-(\\d{2}))?\\s*_?([А-Яа-яA-Za-z]{1,2}[0-9]{0,2})?(_([0-9]{1,2}))?(\\s(.*))?\\.([A-Za-z]{3,5})$";
 
     private NameParser() {}
 
-    public static NameParser parser(String fileName, String egexp) {
+    public static NameParser parser(String fileName, FProperties properties) {
         NameParser np = new NameParser();
-        Pattern pattern = Pattern.compile(egexp);
+        Pattern pattern = Pattern.compile(properties.getNameRegexp());
         Matcher matcher = pattern.matcher(fileName);
         if(matcher.find()) {
-            np.organizationCod = matcher.group(1);
-            np.characteristic = matcher.group(2);
-            np.registrationNumber = matcher.group(3);
-            np.species = matcher.group(5);
-            np.documentCode = matcher.group(6);
-            np.documentVersion = matcher.group(8);
-            np.documentName = matcher.group(9);
-            np.filenameExtension = matcher.group(10);
+            np.organizationCod = matcher.group(properties.getOrganizationCod());
+            np.characteristic = matcher.group(properties.getCharacteristic());
+            np.registrationNumber = matcher.group(properties.getRegistrationNumber());
+            np.species = matcher.group(properties.getSpecies());
+            np.documentCode = matcher.group(properties.getDocumentCode());
+            np.documentVersion = matcher.group(properties.getDocumentVersion());
+            np.documentName = matcher.group(properties.getDocumentName());
+            np.filenameExtension = matcher.group(properties.getFilenameExtension());
             return np;
         }
         return null;
-    }
-
-    public static NameParser parser(String fileName) {
-        return parser(fileName, egexp);
     }
 
     public String getOrganizationCod() {
