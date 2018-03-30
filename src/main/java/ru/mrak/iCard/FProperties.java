@@ -47,7 +47,7 @@ public class FProperties {
         Path globalProperties = Paths.get(globalPath);
         Properties properties = new Properties();
         if(Files.exists(globalProperties)) {
-            try(InputStream stream = Files.newInputStream(globalProperties)) {
+            try(InputStreamReader stream = new InputStreamReader(new FileInputStream(globalProperties.toAbsolutePath().toString()), "UTF-8")) {
                 properties.load(stream);
                 readProperties(properties);
             } catch (IOException e) {
